@@ -32,13 +32,18 @@ public final class TooltipManager {
             }
         )
 
-        let arrow = TooltipArrowView(
-            position: style.arrowPosition,
-            color: style.backgroundColor
-        )
+        var arrow: TooltipArrowView?
 
-        container.addSubview(bubble)
-        container.addSubview(arrow)
+        if style.showsArrow {
+            let arrowView = TooltipArrowView(
+                position: style.arrowPosition,
+                color: style.backgroundColor
+            )
+            container.addSubview(arrowView)
+            arrowView.frame.size = style.arrowSize
+            arrow = arrowView
+        }
+
 
         let bubbleSize = CGSize(width: 220, height: 90)
         bubble.frame.size = bubbleSize
