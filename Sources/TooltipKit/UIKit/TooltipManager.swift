@@ -81,10 +81,36 @@ public final class TooltipManager {
             y: y + style.offsetY
         )
 
-        arrow?.center = CGPoint(
-            x: targetFrame.midX,
-            y: targetFrame.midY
-        )
+        if let arrow = arrow {
+
+            switch style.arrowPosition {
+
+            case .top:
+                arrow.frame.origin = CGPoint(
+                    x: bubble.frame.midX - style.arrowSize.width / 2,
+                    y: bubble.frame.minY - style.arrowSize.height
+                )
+
+            case .bottom:
+                arrow.frame.origin = CGPoint(
+                    x: bubble.frame.midX - style.arrowSize.width / 2,
+                    y: bubble.frame.maxY
+                )
+
+            case .left:
+                arrow.frame.origin = CGPoint(
+                    x: bubble.frame.minX - style.arrowSize.height,
+                    y: bubble.frame.midY - style.arrowSize.width / 2
+                )
+
+            case .right:
+                arrow.frame.origin = CGPoint(
+                    x: bubble.frame.maxX,
+                    y: bubble.frame.midY - style.arrowSize.width / 2
+                )
+            }
+        }
+
 
         bubbleView = bubble
         arrowView = arrow
