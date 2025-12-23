@@ -70,13 +70,14 @@ public final class TooltipManager {
             y: y + style.offsetY
         )
 
-        arrow.center = CGPoint(
+        arrow?.center = CGPoint(
             x: targetFrame.midX,
             y: targetFrame.midY
         )
+        self.arrowView = arrow
 
         bubbleView = bubble
-        arrowView = arrow
+//        arrowView = arrow
     }
 
     public func hide() {
