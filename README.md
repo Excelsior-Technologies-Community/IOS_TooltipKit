@@ -33,17 +33,18 @@ Designed for:
 
 ## Installation (Swift Package Manager)
 
+TooltipKit supports **Swift Package Manager**.
+
+### Option 1: Add via URL (Recommended)
+
 1. Open your Xcode project
 2. Go to **File → Add Packages…**
-3. Choose **Add Local Package**
-4. Select the repository folder:
+3. Paste the repository URL:
 
-```
-IOS_TooltipKit
-```
-
-5. Add **TooltipKit**
-
+'''
+https://github.com/noman1303/IOS_TooltipKit
+'''
+ 
 ---
 
 ## Import
