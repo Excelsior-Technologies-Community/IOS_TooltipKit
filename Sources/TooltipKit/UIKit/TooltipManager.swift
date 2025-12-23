@@ -48,6 +48,17 @@ public final class TooltipManager {
 
         let bubbleSize = CGSize(width: 220, height: 90)
         bubble.frame.size = bubbleSize
+        // ✅ ABSOLUTE POSITION MODE
+        if style.usesAbsolutePositioning {
+            bubble.frame.origin = CGPoint(
+                x: targetFrame.midX + style.offsetX,
+                y: targetFrame.midY + style.offsetY
+            )
+
+            bubbleView = bubble
+            arrowView = nil
+            return
+        }
 
         var x = targetFrame.midX - bubbleSize.width / 2
         var y = targetFrame.midY

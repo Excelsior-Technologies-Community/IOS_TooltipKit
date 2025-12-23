@@ -11,6 +11,7 @@ public struct UIKitTooltipStyle {
 
     public var arrowPosition: ArrowPosition = .top
     public var arrowSize: CGSize = CGSize(width: 20, height: 12)
+    public var usesAbsolutePositioning: Bool = false
 
     // ✅ NEW: control arrow visibility
     public var showsArrow: Bool = true
