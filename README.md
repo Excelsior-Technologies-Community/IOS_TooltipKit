@@ -24,9 +24,11 @@ Designed for:
 ---
 ## Screenshots
 
-### UIKit Tooltips                                                ### SwiftUI Tooltips
-<img src="Assets/UIKit.png" alt="UIKit Tooltips" width="320"/>       <img src="Assets/SwiftUI.jpg" alt="SwiftUI Tooltips" width="320"/>
+### UIKit Tooltips                                              
+<img src="Assets/UIKit.png" alt="UIKit Tooltips" width="320"/>  
 
+### SwiftUI Tooltips
+<img src="Assets/SwiftUI.jpg" alt="SwiftUI Tooltips" width="320"/>
 
 
 ## Installation (Swift Package Manager)
