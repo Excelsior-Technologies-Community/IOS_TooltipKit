@@ -227,7 +227,7 @@ struct TooltipOverlay: View {
             }
         }
         .ignoresSafeArea()
-        .allowsHitTesting(false)
+        .allowsHitTesting(true)
     }
     private func calculatePosition() -> CGPoint {
         let frame = controller.targetFrame
