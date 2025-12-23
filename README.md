@@ -41,10 +41,10 @@ TooltipKit supports **Swift Package Manager**.
 2. Go to **File → Add Packages…**
 3. Paste the repository URL:
 
-'''
+```swift
 https://github.com/noman1303/IOS_TooltipKit
-'''
- 
+```
+
 ---
 
 ## Import
