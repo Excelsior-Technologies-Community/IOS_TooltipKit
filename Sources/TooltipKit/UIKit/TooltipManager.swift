@@ -32,6 +32,8 @@ public final class TooltipManager {
             }
         )
 
+        container.addSubview(bubble)
+
         var arrow: TooltipArrowView?
 
         if style.showsArrow {
@@ -44,10 +46,8 @@ public final class TooltipManager {
             arrow = arrowView
         }
 
-
         let bubbleSize = CGSize(width: 220, height: 90)
         bubble.frame.size = bubbleSize
-        arrow.frame.size = style.arrowSize
 
         var x = targetFrame.midX - bubbleSize.width / 2
         var y = targetFrame.midY
@@ -74,11 +74,11 @@ public final class TooltipManager {
             x: targetFrame.midX,
             y: targetFrame.midY
         )
-        self.arrowView = arrow
 
         bubbleView = bubble
-//        arrowView = arrow
+        arrowView = arrow
     }
+
 
     public func hide() {
         bubbleView?.removeFromSuperview()
