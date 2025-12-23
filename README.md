@@ -1,6 +1,6 @@
 # TooltipKit
 
-**TooltipKit** is a lightweight tooltip library for **SwiftUI and UIKit**, providing **manual X/Y positioning**, **arrow support (top / bottom / left / right)**, and **independent tooltips**.
+**TooltipKit** is a lightweight tooltip library for **SwiftUI and UIKit**, providing **manual X/Y positioning**, **arrow support (top / bottom / left / right)**, and **dismiss buttons**.
 
 Designed for:
 
@@ -17,44 +17,32 @@ Designed for:
 * ✅ Manual X / Y positioning
 * ✅ Arrow support (top / bottom / left / right)
 * ✅ Multiple independent tooltips
+* ✅ Dismiss button support
 * ✅ Absolute positioning mode
 * ✅ iOS 15+
 
 ---
-
 ## Screenshots
 
-### UIKit
+### UIKit Tooltips                                              
+<img src="Assets/UIKit.png" alt="UIKit Tooltips" width="320"/>  
 
-<img src="Assets/UIKit.png" width="320"/>
+### SwiftUI Tooltips
+<img src="Assets/SwiftUI.jpg" alt="SwiftUI Tooltips" width="320"/>
 
-### SwiftUI
-
-<img src="Assets/SwiftUI.jpg" width="320"/>
-
----
 
 ## Installation (Swift Package Manager)
 
-### Option 1: Local Package (Recommended)
+TooltipKit supports **Swift Package Manager**.
+
+### Option 1: Add via URL (Recommended)
 
 1. Open your Xcode project
 2. Go to **File → Add Packages…**
-3. Select **Add Local Package**
-4. Choose the repository folder:
+3. Paste the repository URL:
 
-```
-IOS_TooltipKit
-```
-
-5. Add **TooltipKit**
-
----
-
-### Option 2: Git Repository (if hosted)
-
-```
-https://github.com/your-username/IOS_TooltipKit
+```swift
+https://github.com/Excelsior-Technologies-Community/IOS_TooltipKit
 ```
 
 ---
@@ -71,20 +59,41 @@ import TooltipKit
 
 ---
 
-## 1️⃣ SwiftUI Setup
-
-Create one controller per tooltip:
+## 1️⃣ Minimal SwiftUI Usage
 
 ```swift
-@StateObject private var topTooltip = TooltipController()
-@StateObject private var rightTooltip = TooltipController()
-@StateObject private var leftTooltip = TooltipController()
-@StateObject private var bottomTooltip = TooltipController()
+@StateObject private var tooltip = TooltipController()
+```
+
+```swift
+Button("Show Tooltip") {
+    tooltip.show("Hello from TooltipKit")
+}
+.tooltip(
+    controller: tooltip,
+    style: TooltipStyle()
+)
 ```
 
 ---
 
-## 2️⃣ Full SwiftUI Example (FINAL – Simplified)
+## 2️⃣ SwiftUI – Manual X / Y Positioning
+
+```swift
+.tooltip(
+    controller: tooltip,
+    style: {
+        var style = TooltipStyle()
+        style.offsetX = 40
+        style.offsetY = -70
+        return style
+    }()
+)
+```
+
+---
+
+## 3️⃣ Full SwiftUI Example (Final)
 
 ```swift
 import SwiftUI
@@ -99,110 +108,61 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Color(UIColor.systemGroupedBackground)
-                .ignoresSafeArea()
 
-            VStack(spacing: 60) {
+            VStack(spacing: 50) {
 
-                Spacer()
-
-                // TOP
                 Button("TOP") {
-                    topTooltip.show(
-                        "This tip view cannot be presented with the arrow on the top position, so position bottom has been chosen instead. Tap to dismiss."
-                    )
+                    topTooltip.show("Top Tooltip")
                 }
-                .foregroundColor(.white)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.purple)
-                )
                 .tooltip(
                     controller: topTooltip,
                     style: {
                         var s = TooltipStyle()
-                        s.backgroundColor = .purple
                         s.arrowPosition = .bottom
-                        s.offsetX = 45
                         s.offsetY = -70
                         return s
                     }()
                 )
 
-                // RIGHT
                 Button("RIGHT") {
-                    rightTooltip.show(
-                        "Tip view positioned with the arrow on the left. Tap to dismiss."
-                    )
+                    rightTooltip.show("Right Tooltip")
                 }
-                .foregroundColor(.white)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.blue)
-                )
                 .tooltip(
                     controller: rightTooltip,
                     style: {
                         var s = TooltipStyle()
-                        s.backgroundColor = .blue
                         s.arrowPosition = .left
-                        s.offsetX = 170
-                        s.offsetY = 30
+                        s.offsetX = 140
                         return s
                     }()
                 )
 
-                // LEFT
                 Button("LEFT") {
-                    leftTooltip.show(
-                        "Tip view positioned with the arrow on the right. Tap to dismiss."
-                    )
+                    leftTooltip.show("Left Tooltip")
                 }
-                .foregroundColor(.white)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.blue)
-                )
                 .tooltip(
                     controller: leftTooltip,
                     style: {
                         var s = TooltipStyle()
-                        s.backgroundColor = .blue
                         s.arrowPosition = .right
                         s.offsetX = -80
-                        s.offsetY = 35
                         return s
                     }()
                 )
 
-                // BOTTOM
                 Button("BOTTOM") {
                     bottomTooltip.show("Bottom Tooltip")
                 }
-                .foregroundColor(.white)
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(Color.blue)
-                )
                 .tooltip(
                     controller: bottomTooltip,
                     style: {
                         var s = TooltipStyle()
-                        s.backgroundColor = .green
                         s.arrowPosition = .top
-                        s.offsetX = 50
-                        s.offsetY = 120
+                        s.offsetY = 100
                         return s
                     }()
                 )
-
-                Spacer()
             }
-            .padding()
         }
         .onTapGesture {
             topTooltip.hide()
@@ -213,14 +173,6 @@ struct ContentView: View {
     }
 }
 ```
-
----
-
-## SwiftUI Notes
-
-* One `TooltipController` per tooltip
-* `offsetX / offsetY` move **bubble + arrow together**
-* Arrow is anchored to the tooltip, not the button
 
 ---
 
@@ -254,7 +206,17 @@ override func viewDidLoad() {
 
 ---
 
-## 2️⃣ Full UIKit Example (FINAL)
+## 2️⃣ UIKit – Arrow + Manual X / Y (Final Pattern)
+
+Each tooltip uses:
+
+* `arrowPosition`
+* `showsArrow = true`
+* Independent X / Y offsets
+
+---
+
+## 3️⃣ Full UIKit Example (FINAL – Matches Your Code)
 
 ```swift
 import UIKit
@@ -344,10 +306,10 @@ class ViewController: UIViewController {
 
 ---
 
-## UIKit Notes
+## Notes
 
-* One `TooltipManager` per tooltip
-* Absolute positioning is opt-in
-* Arrow visibility controlled via `showsArrow`
-
+* UIKit → **one `TooltipManager` per tooltip**
+* SwiftUI → **one `TooltipController` per view**
+* Arrow is **anchored to tooltip**, not the button
+* `offsetX / offsetY` move both bubble and arrow together
  
