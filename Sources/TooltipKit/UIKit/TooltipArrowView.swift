@@ -10,14 +10,18 @@ final class TooltipArrowView: UIView {
         self.color = color
         super.init(frame: .zero)
         backgroundColor = .clear
+        isOpaque = false
     }
 
-    required init?(coder: NSCoder) { nil }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func draw(_ rect: CGRect) {
         let path = UIBezierPath()
 
         switch position {
+
         case .top:
             path.move(to: CGPoint(x: rect.midX, y: rect.minY))
             path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))

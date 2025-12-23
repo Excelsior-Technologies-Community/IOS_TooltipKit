@@ -4,6 +4,8 @@ public struct UIKitTooltipStyle {
     public enum ArrowPosition {
         case top, bottom, left, right
     }
+    public var showsArrow: Bool = true
+    public var arrowSize: CGSize = CGSize(width: 22, height: 12)
 
     public var backgroundColor: UIColor = .systemBlue
     public var textColor: UIColor = .white

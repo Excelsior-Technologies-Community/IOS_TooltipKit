@@ -19,11 +19,13 @@ public final class TooltipManager {
 
         guard let container = containerView else { return }
 
+        // 1️⃣ Convert target frame
         let targetFrame = targetView.convert(
             targetView.bounds,
             to: container
         )
 
+        // 2️⃣ Create bubble
         let bubble = TooltipView(
             text: text,
             style: style,
@@ -32,89 +34,78 @@ public final class TooltipManager {
             }
         )
 
-        container.addSubview(bubble)
-
-        var arrow: TooltipArrowView?
-
-        if style.showsArrow {
-            let arrowView = TooltipArrowView(
-                position: style.arrowPosition,
-                color: style.backgroundColor
-            )
-            container.addSubview(arrowView)
-            arrowView.frame.size = style.arrowSize
-            arrow = arrowView
-        }
-
-        let bubbleSize = CGSize(width: 220, height: 90)
+        let bubbleSize = CGSize(width: 240, height: 90)
         bubble.frame.size = bubbleSize
-        // ✅ ABSOLUTE POSITION MODE
-        if style.usesAbsolutePositioning {
-            bubble.frame.origin = CGPoint(
-                x: targetFrame.midX + style.offsetX,
-                y: targetFrame.midY + style.offsetY
-            )
 
-            bubbleView = bubble
-            arrowView = nil
-            return
-        }
-
-        var x = targetFrame.midX - bubbleSize.width / 2
-        var y = targetFrame.midY
+        // 3️⃣ Calculate bubble position FIRST
+        var bubbleX = targetFrame.midX - bubbleSize.width / 2
+        var bubbleY = targetFrame.midY - bubbleSize.height / 2
 
         switch style.arrowPosition {
         case .top:
-            y = targetFrame.maxY + style.arrowSize.height
+            bubbleY = targetFrame.maxY + style.arrowSize.height
         case .bottom:
-            y = targetFrame.minY - bubbleSize.height - style.arrowSize.height
+            bubbleY = targetFrame.minY - bubbleSize.height - style.arrowSize.height
         case .left:
-            x = targetFrame.maxX + style.arrowSize.width
-            y = targetFrame.midY - bubbleSize.height / 2
+            bubbleX = targetFrame.maxX + style.arrowSize.height
         case .right:
-            x = targetFrame.minX - bubbleSize.width - style.arrowSize.width
-            y = targetFrame.midY - bubbleSize.height / 2
+            bubbleX = targetFrame.minX - bubbleSize.width - style.arrowSize.height
         }
 
         bubble.frame.origin = CGPoint(
-            x: x + style.offsetX,
-            y: y + style.offsetY
+            x: bubbleX + style.offsetX,
+            y: bubbleY + style.offsetY
         )
 
-        if let arrow = arrow {
+        // ✅ ADD BUBBLE FIRST
+        container.addSubview(bubble)
+        self.bubbleView = bubble
 
-            switch style.arrowPosition {
+        // 4️⃣ Create arrow AFTER bubble exists
+        guard style.showsArrow else { return }
 
-            case .top:
-                arrow.frame.origin = CGPoint(
-                    x: bubble.frame.midX - style.arrowSize.width / 2,
-                    y: bubble.frame.minY - style.arrowSize.height
-                )
+        let arrow = TooltipArrowView(
+            position: style.arrowPosition,
+            color: style.backgroundColor
+        )
 
-            case .bottom:
-                arrow.frame.origin = CGPoint(
-                    x: bubble.frame.midX - style.arrowSize.width / 2,
-                    y: bubble.frame.maxY
-                )
+        arrow.frame.size = style.arrowSize
 
-            case .left:
-                arrow.frame.origin = CGPoint(
-                    x: bubble.frame.minX - style.arrowSize.height,
-                    y: bubble.frame.midY - style.arrowSize.width / 2
-                )
+        // 5️⃣ Position arrow RELATIVE TO BUBBLE
+        switch style.arrowPosition {
 
-            case .right:
-                arrow.frame.origin = CGPoint(
-                    x: bubble.frame.maxX,
-                    y: bubble.frame.midY - style.arrowSize.width / 2
-                )
-            }
+        case .top:
+            arrow.frame.origin = CGPoint(
+                x: bubble.frame.midX - style.arrowSize.width / 2,
+                y: bubble.frame.minY - style.arrowSize.height
+            )
+
+        case .bottom:
+            arrow.frame.origin = CGPoint(
+                x: bubble.frame.midX - style.arrowSize.width / 2,
+                y: bubble.frame.maxY
+            )
+
+        case .left:
+            arrow.frame.origin = CGPoint(
+                x: bubble.frame.minX - style.arrowSize.height,
+                y: bubble.frame.midY - style.arrowSize.width / 2
+            )
+
+        case .right:
+            arrow.frame.origin = CGPoint(
+                x: bubble.frame.maxX,
+                y: bubble.frame.midY - style.arrowSize.width / 2
+            )
         }
 
+        // ✅ ADD ARROW AFTER POSITIONING
+        container.addSubview(arrow)
+        container.bringSubviewToFront(arrow)
 
-        bubbleView = bubble
-        arrowView = arrow
+        self.arrowView = arrow
     }
+
 
 
     public func hide() {
