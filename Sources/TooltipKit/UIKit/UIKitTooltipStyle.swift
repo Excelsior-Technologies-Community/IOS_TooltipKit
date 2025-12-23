@@ -1,5 +1,4 @@
 import UIKit
-
 public struct UIKitTooltipStyle {
 
     public enum ArrowPosition {
@@ -13,9 +12,12 @@ public struct UIKitTooltipStyle {
     public var arrowPosition: ArrowPosition = .top
     public var arrowSize: CGSize = CGSize(width: 20, height: 12)
 
-    // Manual control (same as SwiftUI)
+    // ✅ NEW: control arrow visibility
+    public var showsArrow: Bool = true
+
     public var offsetX: CGFloat = 0
     public var offsetY: CGFloat = 0
 
     public init() {}
 }
+
