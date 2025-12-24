@@ -93,148 +93,140 @@ import TooltipKit
 
 // MARK: - Demo Content View
 struct ContentView: View {
-    @StateObject private var topTooltip = TooltipController()
-    @StateObject private var bottomTooltip = TooltipController()
-    @StateObject private var leftTooltip = TooltipController()
-    @StateObject private var rightTooltip = TooltipController()
-    @State private var rightFrame: CGRect = .zero
+   @StateObject private var topTooltip = TooltipController()
+   @StateObject private var bottomTooltip = TooltipController()
+   @StateObject private var leftTooltip = TooltipController()
+   @StateObject private var rightTooltip = TooltipController()
+   @State private var rightFrame: CGRect = .zero
 
-    var body: some View {
-      
-    
-            VStack(spacing: 60) {
-             
-                Spacer()
-                // TOP - Arrow at top, tooltip above button
-                VStack(spacing: 12)
-                {
-                    Button("TOP") {
-                        topTooltip.show(
-                            "This tip view  "
-                        )
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.purple)
-                    )
-                    .tooltip(
-                        controller: topTooltip,
-                        style: {
-                            var s = TooltipStyle()
-                            s.backgroundColor = .purple
-                            s.arrowPosition = .bottom
-                            s.offsetX = 45
-                            s.offsetY = -70
-                            return s
-                        }()
-                    )
-
-                }
- 
-                // RIGHT - Arrow at right, tooltip to right of button
-                HStack(spacing: 12)
-                {
-                    Button("RIGHT") {
-                        rightTooltip.show(
-                            "Tip view positioned with the arrow on the left. Tap to dismiss."
-                        )
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.blue)
-                    )
-                    .tooltip(
-                        controller: rightTooltip,
-                        style: {
-                            var s = TooltipStyle()
-                            s.backgroundColor = .blue
-                            s.arrowPosition = .left
-                            s.offsetX = 170
-                            s.offsetY = 30
-                            return s
-                        }()
-                    )
-Spacer()
-                }
- 
-                // LEFT - Arrow at left, tooltip to left of button
-                HStack(spacing: 12)
-                {
-                    Spacer()
-
-                
-                    Button("LEFT") {
-                        leftTooltip.show(
-                            "Tip view positioned with the arrow on the right. Tap to dismiss."
-                        )
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                    .background(
-                        RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.blue)
-                    )
-                    .tooltip(
-                        controller: leftTooltip,
-                        style: {
-                            var s = TooltipStyle()
-                            s.backgroundColor = .blue
-                            s.arrowPosition = .right
-                            s.offsetX = -80
-                            s.offsetY = 35
-                            return s
-                        }()
-                    )
-
-                }
-
-                
-                
-//                Spacer()
-                
-                // BOTTOM - Arrow at bottom, tooltip below button (Image 2)
-                VStack(spacing: 12)
-                {
-                    Button("BOTTOM") {
-                        bottomTooltip.show("Bottom Tooltip")
-                    }
-                    .foregroundColor(.white)
-                    .padding()
-                     
-                    .background(
-                           RoundedRectangle(cornerRadius: 15)
-                               .fill(Color.blue)
-                       )
-                    .tooltip(
-                        controller: bottomTooltip,
-                        style: {
-                            var s = TooltipStyle()
-                            s.arrowPosition = .top
-                            s.offsetX = 50
-                            s.offsetY = 120
-                            s.backgroundColor = .green
-                            return s
-                        }()
-                    )
-Spacer()
-                }
-                
-                Spacer()
-            }
-            .padding()
+   var body: some View {
+       ZStack {
+           Color(UIColor.systemGroupedBackground)
+               .ignoresSafeArea()
+           
+           VStack(spacing: 60) {
             
-            .onTapGesture {
-                topTooltip.hide()
-                bottomTooltip.hide()
-                leftTooltip.hide()
-                rightTooltip.hide()
-            }
-        
-    }
+               Spacer()
+               VStack(spacing: 12) {
+                   Button("TOP") {
+                       topTooltip.show(
+                           "This tip view cannot be presented with the arrow on the top position."
+                       )
+                   }
+                   .foregroundColor(.white)
+                   .padding()
+                   .background(
+                       RoundedRectangle(cornerRadius: 12)
+                           .fill(Color.purple)
+                   )
+                   .tooltip(
+                       controller: topTooltip,
+                       style: {
+                           var s = TooltipStyle()
+                           s.backgroundColor = .purple
+                           s.arrowPosition = .bottom
+                           s.offsetX = 45
+                           s.offsetY = -40
+                           return s
+                       }()
+                   )
+               }
+
+               HStack(spacing: 12) {
+                   Button("RIGHT") {
+                       rightTooltip.show(
+                           "Tip view positioned with the arrow on the left."
+                       )
+                   }
+                   .foregroundColor(.white)
+                   .padding()
+                   .background(
+                       RoundedRectangle(cornerRadius: 12)
+                           .fill(Color.blue)
+                   )
+                   .tooltip(
+                       controller: rightTooltip,
+                       style: {
+                           var s = TooltipStyle()
+                           s.backgroundColor = .blue
+                           s.arrowPosition = .left
+                           s.offsetX = 150
+                           s.offsetY = 30
+                           return s
+                       }()
+                   )
+
+                   Spacer()
+               }
+
+               HStack(spacing: 12) {
+                   Spacer()
+
+                   Button("LEFT") {
+                       leftTooltip.show(
+                           "Tip view positioned with the arrow on the right."
+                       )
+                   }
+                   .foregroundColor(.white)
+                   .padding()
+                   .background(
+                       RoundedRectangle(cornerRadius: 12)
+                           .fill(Color.blue)
+                   )
+                   .tooltip(
+                       controller: leftTooltip,
+                       style: {
+                           var s = TooltipStyle()
+                           s.backgroundColor = .blue
+                           s.arrowPosition = .right
+                           s.offsetX = -80
+                           s.offsetY = 35
+                           return s
+                       }()
+                   )
+               }
+
+               
+               
+               Spacer()
+               
+               VStack(spacing: 12) {
+                   Button("BOTTOM") {
+                       bottomTooltip.show(
+                           "Tip view inside the navigation controller's view."
+                       )
+                   }
+                   .foregroundColor(.white)
+                   .padding()
+                   .background(
+                       RoundedRectangle(cornerRadius: 12)
+                           .fill(Color.green)
+                   )
+                   .tooltip(
+                       controller: bottomTooltip,
+                       style: {
+                           var s = TooltipStyle()
+                           s.backgroundColor = .green
+                           s.arrowPosition = .top
+                           s.offsetX = 40
+                           s.offsetY = 100
+                           return s
+                       }()
+                   )
+               }
+
+               
+               Spacer()
+           }
+           .padding()
+       }
+       .onTapGesture {
+           topTooltip.hide()
+           bottomTooltip.hide()
+           leftTooltip.hide()
+           rightTooltip.hide()
+       }
+   }
 }
 ```
 
